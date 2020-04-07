@@ -4,7 +4,7 @@
 int main() {
   mnist::MNIST_dataset<std::vector, std::vector<uint8_t>, uint8_t> dataset =
       mnist::read_dataset<std::vector, std::vector, uint8_t, uint8_t>(
-          "./");
+          "mnist/");
   std::vector<double> in;
   for (unsigned long i = 0; i < dataset.training_images[0].size(); ++i)
     in.push_back(dataset.training_images[0][i] / 255.0);
