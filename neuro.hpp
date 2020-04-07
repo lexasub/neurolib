@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <vector>
 #include <fstream>
+#include <ctime>
 
 template <class T> struct serialized_data{
   T w = 0, dw = 0, eps = 0, alpha = 0;

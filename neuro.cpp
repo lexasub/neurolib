@@ -2,6 +2,7 @@
 template <class T, class W, class SUM, class CNT>
 neuro<T, W, SUM, CNT>::neuro(const std::vector<SUM> &input,
                              const std::vector<CNT> &n) {
+  srand(time(NULL));
   std::default_random_engine rd;
   std::uniform_real_distribution<W> urd(-1.0, 1.0);
   inp.resize(input.size());
@@ -84,7 +85,8 @@ void neuro<T, W, SUM, CNT>::run(const std::vector<SUM> &real_vect) {
          it != output.end(); ++it, ++i)
       sum += ((*it)->sum - real_vect[i]) * ((*it)->sum - real_vect[i]);
     ku = 0;
-    std::cout << (sum / real_vect.size()) << std::endl;
+    sum /= real_vect.size(); 
+    std::cout << sum << std::endl;
   }
   backward(real_vect);
 //  serialize("out.dmp");
