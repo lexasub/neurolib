@@ -12,22 +12,24 @@
 #include <fstream>
 #include <ctime>
 
-template <class T> struct serialized_data{
+template <class T> struct serialized_data{//data for serializate
   T w = 0, dw = 0, eps = 0, alpha = 0;
 };
 
 template <class T, class W, class SUM, class CNT> class neuro {
   bool debug = false;
-  std::vector<T *> inp, output;
+  const CNT skip_print = 1;
+  std::vector<T *> inp, output;//vectors with link on begin, end of 
+  			       //neural network
 
-  void forward();
-  void backward(const std::vector<SUM> &real_vect);
+  void forward();//forward step
+  void backward(const std::vector<SUM> &real_vect);//backward step
   
   void first_lay_forward(extmap<link<T, W> *, SUM> &m, 
                          std::unordered_set<T *> &out_set);
   void other_lay_forward(extmap<link<T, W> *, SUM> &m, 
                          const std::unordered_set<T *> &in_set,
-                         std::unordered_set<T *> &out_set);
+                         std::unordered_set<T *> &out_set) const;
   void last_lay_backward(std::unordered_map<T *, SUM> &delta_out, 
                          std::unordered_set<T *> &out_set,
                          const std::vector<SUM> &real_vect);
@@ -35,8 +37,8 @@ template <class T, class W, class SUM, class CNT> class neuro {
                           std::unordered_map<T *, SUM> &delta_out,
                           std::unordered_set<T *> &in_set, 
                           std::unordered_set<T *> &out_set);
-  SUM activate(const SUM &arg);
-  SUM dactivate(const SUM &arg);
+  static inline SUM activate(const SUM &arg);
+  static inline SUM dactivate(const SUM &arg);
   public:
   neuro(const std::vector<SUM> &input, const std::vector<CNT> &n);
   void run(const std::vector<SUM> &real_vect); // forward then backward
